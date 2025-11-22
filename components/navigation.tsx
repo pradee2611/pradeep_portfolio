@@ -33,7 +33,7 @@ export function Navigation() {
   const handleDownloadResume = () => {
     // Create a link element to trigger download
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
+    link.href = '/Pradeep_kumar_S.pdf';
     link.download = 'Pradeep kumar S.pdf';
     document.body.appendChild(link);
     link.click();

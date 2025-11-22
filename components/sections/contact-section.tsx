@@ -33,7 +33,7 @@ const contactInfo = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'pradeep-kumar-selvam',
+    value: 'https://www.linkedin.com/in/pradeep-kumar-selvam',
     href: 'https://www.linkedin.com/in/pradeep-kumar-selvam',
     color: 'text-blue-600'
   }
@@ -52,15 +52,35 @@ export function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
       toast({
         title: "Message sent successfully!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
       setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to send message. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -107,7 +127,7 @@ export function ContactSection() {
             transition={{ delay: 0.4, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Let's discuss your next project or just say hello
+            Let&apos;s discuss your next project or just say hello
           </motion.p>
         </motion.div>
 
