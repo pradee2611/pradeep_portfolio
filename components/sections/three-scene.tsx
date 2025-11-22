@@ -9,12 +9,11 @@ const Canvas = dynamic(() => import('@react-three/fiber').then(mod => ({ default
   ssr: false,
   loading: () => <div className="w-full h-full bg-gradient-to-br from-background via-background to-muted" />
 });
-const Points = dynamic(() => import('@react-three/drei').then(mod => ({ default: mod.Points })), { ssr: false });
-const PointMaterial = dynamic(() => import('@react-three/drei').then(mod => ({ default: mod.PointMaterial })), { ssr: false });
 
 function AnimatedSphere() {
   const ref = useRef<THREE.Points>(null);
   const [error, setError] = useState(false);
+  const [drei, setDrei] = useState<any>(null);
   
   const sphere = new Float32Array(5000 * 3);
   for (let i = 0; i < 5000; i++) {
@@ -28,6 +27,15 @@ function AnimatedSphere() {
   }
 
   useEffect(() => {
+    // Load drei components
+    import('@react-three/drei').then((dreiModule) => {
+      setDrei(dreiModule);
+    }).catch(() => setError(true));
+  }, []);
+
+  useEffect(() => {
+    if (!drei || error) return;
+    
     let animationId: number;
     
     const animate = () => {
@@ -50,11 +58,14 @@ function AnimatedSphere() {
         cancelAnimationFrame(animationId);
       }
     };
-  }, []);
+  }, [drei, error]);
 
-  if (error) {
+  if (error || !drei) {
     return null;
   }
+
+  const Points = drei.Points;
+  const PointMaterial = drei.PointMaterial;
 
   return (
     <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>

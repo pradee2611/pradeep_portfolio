@@ -71,7 +71,9 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-muted/30">
+    <section id="contact" className="py-20 bg-gradient-to-b from-muted/30 via-background to-muted/30 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -80,13 +82,33 @@ export function ContactSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Get In Touch
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <motion.h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Get In Touch
+            </span>
+          </motion.h2>
+          <motion.div 
+            className="w-32 h-1 bg-gradient-to-r from-primary via-purple-500 to-pink-500 mx-auto rounded-full"
+            initial={{ width: 0 }}
+            whileInView={{ width: 128 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+          />
+          <motion.p 
+            className="mt-8 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             Let's discuss your next project or just say hello
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
@@ -111,7 +133,7 @@ export function ContactSection() {
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                     viewport={{ once: true }}
                   >
-                    <Card className="hover:shadow-md transition-shadow duration-300">
+                    <Card className="hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 backdrop-blur-sm bg-card/50 border-2 border-primary/10 hover:border-primary/30">
                       <CardContent className="p-4">
                         <div className="flex items-center space-x-4">
                           <div className={`p-3 rounded-lg bg-muted/50`}>
@@ -156,7 +178,7 @@ export function ContactSection() {
               </h4>
               <div className="flex space-x-4">
                 <Button variant="outline" size="icon" className="group" asChild>
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/pradee2611" target="_blank" rel="noopener noreferrer">
                     <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   </a>
                 </Button>
@@ -176,7 +198,9 @@ export function ContactSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Card className="hover:shadow-lg transition-shadow duration-300">
+            <Card className="hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 backdrop-blur-sm bg-card/50 border-2 border-primary/10 hover:border-primary/30 relative overflow-hidden">
+              {/* Decorative Gradient */}
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-500" />
               <CardHeader>
                 <CardTitle className="text-2xl text-primary">
                   Send Message
@@ -184,18 +208,28 @@ export function ContactSection() {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    viewport={{ once: true }}
+                  >
                     <Input
                       name="name"
                       placeholder="Your Name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="transition-all duration-200 focus:scale-[1.02]"
+                      className="transition-all duration-300 focus:scale-[1.02] focus:border-primary/50 backdrop-blur-sm bg-background/50"
                     />
-                  </div>
+                  </motion.div>
                   
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    viewport={{ once: true }}
+                  >
                     <Input
                       name="email"
                       type="email"
@@ -203,11 +237,16 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="transition-all duration-200 focus:scale-[1.02]"
+                      className="transition-all duration-300 focus:scale-[1.02] focus:border-primary/50 backdrop-blur-sm bg-background/50"
                     />
-                  </div>
+                  </motion.div>
                   
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    viewport={{ once: true }}
+                  >
                     <Textarea
                       name="message"
                       placeholder="Your Message"
@@ -215,16 +254,24 @@ export function ContactSection() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="transition-all duration-200 focus:scale-[1.02] resize-none"
+                      className="transition-all duration-300 focus:scale-[1.02] focus:border-primary/50 resize-none backdrop-blur-sm bg-background/50"
                     />
-                  </div>
+                  </motion.div>
                   
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full group"
-                    size="lg"
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full group bg-gradient-to-r from-primary to-purple-600 hover:from-purple-600 hover:to-pink-600 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/50"
+                      size="lg"
+                    >
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
@@ -236,7 +283,8 @@ export function ContactSection() {
                         Send Message
                       </>
                     )}
-                  </Button>
+                    </Button>
+                  </motion.div>
                 </form>
               </CardContent>
             </Card>
