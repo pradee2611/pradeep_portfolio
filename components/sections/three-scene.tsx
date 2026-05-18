@@ -1,124 +1,110 @@
 "use client";
 
-import { useRef, useEffect, useState, Suspense } from 'react';
-import dynamic from 'next/dynamic';
-import * as THREE from 'three';
+import { useRef, useMemo, useEffect, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { 
+  MeshDistortMaterial, 
+  Sphere, 
+  Float, 
+  Environment, 
+  Lightformer
+} from "@react-three/drei";
+import { useTheme } from "next-themes";
+import * as THREE from "three";
 
-// Dynamically import Three.js components to avoid SSR issues
-const Canvas = dynamic(() => import('@react-three/fiber').then(mod => ({ default: mod.Canvas })), { 
-  ssr: false,
-  loading: () => <div className="w-full h-full bg-gradient-to-br from-background via-background to-muted" />
-});
+function Rig() {
+  const { camera, mouse } = useThree();
+  const vec = new THREE.Vector3();
 
-function AnimatedSphere() {
-  const ref = useRef<THREE.Points>(null);
-  const [error, setError] = useState(false);
-  const [drei, setDrei] = useState<any>(null);
-  
-  const sphere = new Float32Array(5000 * 3);
-  for (let i = 0; i < 5000; i++) {
-    const r = Math.random() * 25 + 5;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(Math.random() * 2 - 1);
-    
-    sphere[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-    sphere[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-    sphere[i * 3 + 2] = r * Math.cos(phi);
-  }
-
-  useEffect(() => {
-    // Load drei components
-    import('@react-three/drei').then((dreiModule) => {
-      setDrei(dreiModule);
-    }).catch(() => setError(true));
-  }, []);
-
-  useEffect(() => {
-    if (!drei || error) return;
-    
-    let animationId: number;
-    
-    const animate = () => {
-      try {
-        if (ref.current) {
-          const time = Date.now() * 0.001;
-          ref.current.rotation.x = Math.sin(time * 0.1) * 0.1;
-          ref.current.rotation.y = time * 0.05;
-        }
-        animationId = requestAnimationFrame(animate);
-      } catch (err) {
-        setError(true);
-      }
-    };
-
-    animate();
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, [drei, error]);
-
-  if (error || !drei) {
-    return null;
-  }
-
-  const Points = drei.Points;
-  const PointMaterial = drei.PointMaterial;
-
-  return (
-    <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color="hsl(var(--primary))"
-        size={0.05}
-        sizeAttenuation={true}
-        depthWrite={false}
-      />
-    </Points>
-  );
+  return useFrame(() => {
+    // Smooth camera rig for floating effect
+    camera.position.lerp(vec.set(mouse.x * 2.5, mouse.y * 2.5, camera.position.z), 0.05);
+    camera.lookAt(0, 0, 0);
+  });
 }
 
-function ThreeSceneContent() {
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    // Additional WebGL check
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        setError(true);
-      }
-    } catch (err) {
-      setError(true);
-    }
-  }, []);
-
-  if (error) {
-    return <div className="w-full h-full bg-gradient-to-br from-background via-background to-muted" />;
-  }
-
-  return (
-    <Canvas camera={{ position: [0, 0, 1] }}>
-      <Suspense fallback={null}>
-        <AnimatedSphere />
-      </Suspense>
-    </Canvas>
-  );
-}
-
-export default function ThreeScene() {
+function GlassBlob() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return <div className="w-full h-full bg-gradient-to-br from-background via-background to-muted" />;
-  }
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
+    }
+  });
 
-  return <ThreeSceneContent />;
-} 
+  if (!mounted) return null;
+
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <Float speed={3} rotationIntensity={0.6} floatIntensity={1.2}>
+      <Sphere ref={meshRef} visible args={[1, 256, 256]} scale={2.8}>
+        {/* Dynamic morphing material with high-end glass physics */}
+        <MeshDistortMaterial
+          color={isDark ? "#d8b4fe" : "#a78bfa"}
+          speed={2.5}
+          distort={0.35}
+          radius={1}
+          transmission={isDark ? 0.75 : 0.65}
+          opacity={1}
+          metalness={isDark ? 0.15 : 0.1}
+          roughness={isDark ? 0.08 : 0.12}
+          ior={isDark ? 1.55 : 1.65}
+          thickness={isDark ? 1.2 : 2.5}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+        />
+      </Sphere>
+    </Float>
+  );
+}
+
+function Scene() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <>
+      <Rig />
+      <ambientLight intensity={isDark ? 0.8 : 1.2} />
+      <directionalLight position={[10, 10, 5]} intensity={isDark ? 3.5 : 2.5} color={isDark ? "#c084fc" : "#8b5cf6"} />
+      <directionalLight position={[-10, -10, -5]} intensity={isDark ? 2.5 : 1.5} color={isDark ? "#2dd4bf" : "#06b6d4"} />
+      
+      <GlassBlob />
+      
+      <Environment preset="city" background={false}>
+        <Lightformer form="rect" intensity={isDark ? 2.5 : 1.5} position={[10, 5, 0]} scale={[10, 10, 1]} target={[0, 0, 0]} />
+        <Lightformer form="rect" intensity={isDark ? 3 : 2} position={[-10, -5, 0]} scale={[10, 10, 1]} target={[0, 0, 0]} color={isDark ? "#ffccff" : "#ffeedd"} />
+      </Environment>
+    </>
+  );
+}
+
+export default function ThreeScene() {
+  return (
+    <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
+      <Canvas 
+        camera={{ position: [0, 0, 7], fov: 45 }} 
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping }}
+      >
+        <Scene />
+      </Canvas>
+    </div>
+  );
+}

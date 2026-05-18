@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import * as THREE from 'three';
 
 // Dynamically import the entire 3D component
-const ThreeScene = dynamic(() => import('./three-scene'), { 
+const ThreeScene = dynamic(() => import('./three-scene'), {
   ssr: false,
   loading: () => <div className="w-full h-full bg-background" />
 });
@@ -23,7 +23,7 @@ export function HeroSection() {
     target: ref,
     offset: ["start start", "end start"]
   });
-  
+
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   const y = useTransform(scrollYProgress, [0, 0.5], [0, -50]);
@@ -78,140 +78,71 @@ export function HeroSection() {
         )}
       </div>
 
-      {/* Floating Particles Effect - Client Only */}
-      {mounted && (
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => {
-            const randomX = Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1920);
-            const randomY = Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080);
-            const randomYEnd = Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1080);
-            const duration = Math.random() * 3 + 2;
-            const delay = Math.random() * 2;
-            
-            return (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-black dark:bg-primary/30 rounded-full"
-                initial={{
-                  x: randomX,
-                  y: randomY,
-                  opacity: 0.3,
-                }}
-                animate={{
-                  y: randomYEnd,
-                  opacity: [0.3, 0.8, 0.3],
-                }}
-                transition={{
-                  duration,
-                  repeat: Infinity,
-                  delay,
-                  ease: "easeInOut",
-                }}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      {/* Content */}
+      {/* Noomo-Style Storytelling Content */}
       <motion.div
         style={{ opacity, scale, y }}
-        className="relative z-10 text-center max-w-5xl mx-auto px-4"
+        className="relative z-10 w-full h-full flex flex-col justify-center px-4 md:px-12 lg:px-24 pointer-events-none"
       >
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col"
         >
-          {/* Animated Badge */}
+          {/* Subtle top label */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="text-gray-500 dark:text-gray-400 font-sans text-sm md:text-base uppercase tracking-[0.2em] mb-4 md:mb-8"
           >
-            <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-            <span className="text-sm font-medium text-primary">Available for Opportunities</span>
+            Digital Portfolio
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
-          >
-            <span className="bg-gradient-to-r from-primary via-purple-500 via-pink-500 to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]">
-              Pradeep Kumar S
-            </span>
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-4 max-w-3xl mx-auto leading-relaxed font-light"
-          >
-            Full Stack Developer
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-lg md:text-xl text-muted-foreground/80 mb-12 max-w-2xl mx-auto"
-          >
-            MERN & Next.js | Passionate about Scalable AI-integrated Web Apps
-          </motion.p>
+          {/* MASSIVE Typography - Noomo Style */}
+          <div className="flex flex-col text-gray-900 dark:text-white leading-[0.9]">
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[8vw] md:text-[6vw] font-medium tracking-tight flex items-center gap-4"
+            >
+              The craft <span className="font-serif italic font-normal text-[9vw] md:text-[7vw]">of</span> code
+            </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[14vw] md:text-[12vw] font-serif italic tracking-tighter"
+            >
+              Pradeep Kumar
+            </motion.h1>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end justify-between max-w-7xl gap-8"
           >
-            <Button 
-              size="lg" 
-              className="group relative overflow-hidden bg-gradient-to-r from-primary to-purple-600 hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg shadow-primary/50 hover:shadow-xl hover:shadow-primary/70"
-              asChild
-            >
-              <a href="#contact" className="relative z-10 flex items-center">
-                Get In Touch
-                <ArrowDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-md font-sans font-light leading-relaxed">
+              Full Stack Developer crafting immersive, scalable, and AI-integrated web experiences.
+            </p>
+
+            <div className="flex items-center gap-6 pointer-events-auto">
+              <a href="#contact" className="group flex items-center gap-4 cursor-pointer bg-black text-white dark:bg-white dark:text-black px-6 py-3 rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors">
+                <span className="uppercase tracking-widest text-xs font-semibold">
+                  Let's Talk
+                </span>
+                <Sparkles className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </a>
-            </Button>
-            
-            <div className="flex space-x-4">
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" size="icon" className="group backdrop-blur-sm bg-background/50 border-primary/20 hover:border-primary/50">
-                  <a href="https://github.com/pradee2611" target="_blank" rel="noopener noreferrer">
-                    <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" size="icon" className="group backdrop-blur-sm bg-background/50 border-primary/20 hover:border-primary/50">
-                  <a href="https://www.linkedin.com/in/pradeep-kumar-selvam" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="group backdrop-blur-sm bg-background/50 border-primary/20 hover:border-primary/50"
-                  onClick={copyEmailToClipboard}
-                >
-                  <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                </Button>
-              </motion.div>
             </div>
           </motion.div>
         </motion.div>
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
@@ -228,7 +159,7 @@ export function HeroSection() {
             className="w-1.5 h-3 bg-primary rounded-full mt-2"
           />
         </motion.div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

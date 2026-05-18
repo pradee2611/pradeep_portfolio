@@ -1,49 +1,40 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Heart, ArrowUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="flex items-center space-x-2 text-muted-foreground mb-4 md:mb-0"
-          >
-            <span>Made with</span>
-            <Heart className="w-4 h-4 text-red-500 animate-pulse" />
-            <span>by Pradeep Kumar S</span>
-          </motion.div>
+    <footer className="bg-white dark:bg-black border-t border-gray-100 dark:border-gray-900 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          {/* Left: Copyright */}
+          <p className="text-xs font-sans uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 text-center md:text-left">
+            &copy; {currentYear} Pradeep Kumar Selvam. All rights reserved.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            viewport={{ once: true }}
-            className="flex items-center space-x-4"
-          >
-            <p className="text-sm text-muted-foreground">
-              © 2024 All rights reserved
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={scrollToTop}
-              className="group"
+          {/* Right: Quick Links */}
+          <div className="flex items-center space-x-8">
+            <a 
+              href="https://github.com/pradee2611" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-xs font-sans uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
             >
-              <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
-            </Button>
-          </motion.div>
+              GitHub
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/pradeep-kumar-selvam" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-xs font-sans uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+            >
+              LinkedIn
+            </a>
+          </div>
+
         </div>
       </div>
     </footer>

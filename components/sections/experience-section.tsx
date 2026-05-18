@@ -1,9 +1,6 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Briefcase, Calendar, MapPin, CheckCircle } from 'lucide-react';
 
 const responsibilities = [
   'Built full-stack web applications with MERN and Next.js',
@@ -15,134 +12,80 @@ const responsibilities = [
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-20 bg-gradient-to-b from-muted/30 via-background to-muted/30 relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
+    <section id="experience" className="py-32 bg-white dark:bg-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-24 flex flex-col md:flex-row items-baseline gap-4 md:gap-8 border-b border-gray-200 dark:border-gray-800 pb-12"
         >
-          <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Work Experience
-            </span>
-          </motion.h2>
-          <motion.div 
-            className="w-32 h-1 bg-gradient-to-r from-primary via-purple-500 to-pink-500 mx-auto rounded-full"
-            initial={{ width: 0 }}
-            whileInView={{ width: 128 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          />
-          <motion.p 
-            className="mt-8 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            Professional journey and key achievements
-          </motion.p>
+          <span className="text-gray-400 dark:text-gray-600 font-sans tracking-[0.2em] uppercase text-sm">
+            04
+          </span>
+          <h2 className="text-[12vw] md:text-[8vw] font-serif italic text-gray-900 dark:text-white leading-none tracking-tighter">
+            Experience
+          </h2>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
+        {/* Minimalist Experience Row */}
+        <div className="flex flex-col">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             viewport={{ once: true }}
+            className="group block py-12 border-b border-gray-200 dark:border-gray-800"
           >
-            <Card className="hover:shadow-2xl transition-all duration-500 relative overflow-hidden group backdrop-blur-sm bg-card/50 border-2 border-primary/20 hover:border-primary/40">
-              <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-primary via-purple-500 to-pink-500 group-hover:w-2 transition-all duration-500"></div>
-              {/* Decorative Gradient */}
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-500" />
-              
-              <CardHeader className="pb-6">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div>
-                    <CardTitle className="text-2xl font-bold flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-primary/10 rounded-lg">
-                        <Briefcase className="w-6 h-6 text-primary" />
-                      </div>
-                      Junior Software Associate
-                    </CardTitle>
-                    <h3 className="text-xl text-primary font-semibold">
-                      SNS Innovation Hub, Coimbatore
-                    </h3>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Badge variant="outline" className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      July 2024 – July 2025
-                    </Badge>
-                    <Badge variant="outline" className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3" />
-                      Coimbatore
-                    </Badge>
-                  </div>
-                </div>
-              </CardHeader>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 items-start">
 
-              <CardContent className="space-y-6">
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-primary">
-                    Key Responsibilities
-                  </h4>
-                  <div className="space-y-3">
-                    {responsibilities.map((responsibility, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1, duration: 0.5 }}
-                        viewport={{ once: true }}
-                        className="flex items-start gap-3 group"
-                      >
-                        <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-200" />
-                        <p className="text-muted-foreground leading-relaxed">
-                          {responsibility}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
+              {/* Title & Date */}
+              <div className="md:col-span-4 flex flex-col gap-2">
+                <h3 className="text-4xl font-medium tracking-tight text-gray-900 dark:text-white">
+                  Software Associate
+                </h3>
+                <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  July 2024 – July 2025
+                </p>
+              </div>
 
-                <div className="pt-4 border-t border-border">
-                  <h4 className="text-lg font-semibold mb-3 text-primary">
-                    Technologies Used
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {['MERN Stack', 'Next.js', 'React.js', 'Node.js', 'Express.js', 'MongoDB', 'Git', 'GitHub'].map((tech, index) => (
-                      <motion.div
-                        key={tech}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.05, duration: 0.3 }}
-                        viewport={{ once: true }}
-                      >
-                        <Badge 
-                          variant="secondary"
-                          className="hover:bg-primary hover:text-primary-foreground transition-colors duration-200"
-                        >
-                          {tech}
-                        </Badge>
-                      </motion.div>
-                    ))}
-                  </div>
+              {/* Company & Location */}
+              <div className="md:col-span-3 flex flex-col">
+                <p className="text-xl font-serif italic text-gray-600 dark:text-gray-400 mb-2">
+                  SNS Square
+                </p>
+                <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                  Coimbatore
+                </p>
+              </div>
+
+              {/* Responsibilities */}
+              <div className="md:col-span-5 flex flex-col">
+                <ul className="space-y-4">
+                  {responsibilities.map((responsibility, index) => (
+                    <li key={index} className="flex items-start gap-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-600 mt-2.5 flex-shrink-0" />
+                      <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
+                        {responsibility}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-900">
+                  <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4">
+                    Technologies
+                  </p>
+                  <p className="text-base text-gray-600 dark:text-gray-400 font-serif italic">
+                    MERN Stack, Next.js, React.js, Node.js, Express.js, MongoDB, Git
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+            </div>
           </motion.div>
         </div>
       </div>

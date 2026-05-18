@@ -1,9 +1,6 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { GraduationCap, Calendar, MapPin } from 'lucide-react';
 
 const education = [
   {
@@ -12,7 +9,6 @@ const education = [
     year: '2024',
     location: 'Coimbatore',
     type: 'Higher Education',
-    color: 'from-blue-500 to-purple-500'
   },
   {
     institution: 'Sri Ramakrishna Polytechnic College',
@@ -20,7 +16,6 @@ const education = [
     year: '2019',
     location: 'Coimbatore',
     type: 'Technical Education',
-    color: 'from-green-500 to-teal-500'
   },
   {
     institution: 'REX Senior Secondary School',
@@ -28,95 +23,75 @@ const education = [
     year: '2017',
     location: '',
     type: 'School Education',
-    color: 'from-orange-500 to-red-500'
   }
 ];
 
 export function EducationSection() {
   return (
-    <section id="education" className="py-20">
+    <section id="education" className="py-32 bg-white dark:bg-black relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-24 flex flex-col md:flex-row items-baseline gap-4 md:gap-8 border-b border-gray-200 dark:border-gray-800 pb-12"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <span className="text-gray-400 dark:text-gray-600 font-sans tracking-[0.2em] uppercase text-sm">
+            06
+          </span>
+          <h2 className="text-[12vw] md:text-[8vw] font-serif italic text-gray-900 dark:text-white leading-none tracking-tighter">
             Education
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Academic journey and educational milestones
-          </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-purple-500 to-pink-500 hidden md:block"></div>
+        {/* Minimalist Education Row */}
+        <div className="flex flex-col">
+          {education.map((edu, index) => (
+            <motion.div
+              key={edu.institution}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
+              className="group block py-12 border-b border-gray-200 dark:border-gray-800 hover:border-gray-900 dark:hover:border-white transition-colors duration-500 cursor-default"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 items-center">
+                
+                {/* Year & Type */}
+                <div className="md:col-span-3 flex flex-col">
+                  <p className="text-3xl font-serif italic text-gray-900 dark:text-white mb-2">
+                    {edu.year}
+                  </p>
+                  <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                    {edu.type}
+                  </p>
+                </div>
 
-            <div className="space-y-8">
-              {education.map((edu, index) => (
-                <motion.div
-                  key={edu.institution}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2, duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className={`relative ${index % 2 === 0 ? 'md:ml-16' : 'md:ml-16'}`}
-                >
-                  {/* Timeline Dot */}
-                  <div className="absolute -left-12 top-6 w-4 h-4 rounded-full bg-background border-4 border-primary hidden md:block z-10"></div>
-                  
-                  <Card className="hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
-                    <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${edu.color}`}></div>
-                    
-                    <CardHeader className="pb-4">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div className="flex items-start gap-4">
-                          <div className="p-3 bg-primary/10 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                            <GraduationCap className="w-6 h-6 text-primary" />
-                          </div>
-                          <div>
-                            <CardTitle className="text-xl font-bold text-foreground">
-                              {edu.institution}
-                            </CardTitle>
-                            <p className="text-lg text-muted-foreground font-medium">
-                              {edu.degree}
-                            </p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex flex-col sm:items-end gap-2">
-                          <Badge variant="outline" className="flex items-center gap-1 w-fit">
-                            <Calendar className="w-3 h-3" />
-                            {edu.year}
-                          </Badge>
-                          {edu.location && (
-                            <Badge variant="secondary" className="flex items-center gap-1 w-fit">
-                              <MapPin className="w-3 h-3" />
-                              {edu.location}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </CardHeader>
+                {/* Institution */}
+                <div className="md:col-span-5 flex flex-col">
+                  <h3 className="text-3xl md:text-4xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500 mb-2">
+                    {edu.institution}
+                  </h3>
+                </div>
 
-                    <CardContent>
-                      <Badge 
-                        variant="outline" 
-                        className="text-sm"
-                      >
-                        {edu.type}
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                {/* Degree & Location */}
+                <div className="md:col-span-4 flex flex-col md:text-right">
+                  <p className="text-xl text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-2">
+                    {edu.degree}
+                  </p>
+                  {edu.location && (
+                    <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500">
+                      {edu.location}
+                    </p>
+                  )}
+                </div>
+
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
