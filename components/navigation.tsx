@@ -41,15 +41,14 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-900 py-4' 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-900 py-4'
           : 'bg-transparent py-6'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
+
           {/* Logo */}
           <motion.a
             href="#home"
@@ -65,7 +64,7 @@ export function Navigation() {
               }
             }}
           >
-            Pradeep.
+            Pradeep kumar S
           </motion.a>
 
           {/* Desktop Navigation */}
@@ -93,7 +92,7 @@ export function Navigation() {
           </div>
 
           {/* Desktop Actions */}
-          <motion.div 
+          <motion.div
             className="hidden md:flex items-center space-x-4"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

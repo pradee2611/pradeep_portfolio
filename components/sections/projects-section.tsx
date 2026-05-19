@@ -14,13 +14,6 @@ const featuredProjects = [
     url: 'https://www.startzyai.com/',
   },
   {
-    title: 'Interview Portal',
-    subtitle: 'Assessment & Hiring',
-    description: 'An intelligent interview platform featuring question modules, automated evaluation logic, and comprehensive admin dashboard.',
-    role: 'Question modules, auto-evaluation logic, admin dashboard',
-    technologies: ['React', 'Express', 'Node.js', 'MongoDB'],
-  },
-  {
     title: 'EdCom',
     subtitle: 'Student Admission Portal',
     description: 'A student admission management system with multi-step forms, real-time validation, and secure payment integration.',
@@ -214,4 +207,4 @@ export function ProjectsSection() {
       </div>
     </section>
   );
-}
+}

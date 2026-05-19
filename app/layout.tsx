@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   keywords: 'Full Stack Developer, MERN Stack, Next.js, React, Node.js, MongoDB, JavaScript, TypeScript',
   authors: [{ name: 'Pradeep Kumar S' }],
   icons: {
-    icon: '/coding-monitor-svgrepo-com.svg',
-    shortcut: '/coding-monitor-svgrepo-com.svg',
-    apple: '/image.png',
+    icon: '/PK_lightlogo.png',
+    shortcut: '/PK_lightlogo.png',
+    apple: '/PK_lightlogo.png',
   },
   openGraph: {
     title: 'Pradeep Kumar S - Full Stack Developer',
