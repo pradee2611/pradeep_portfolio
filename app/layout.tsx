@@ -9,8 +9,8 @@ const playfair = Playfair_Display({ subsets: ['latin'], style: ['italic'], varia
 
 export const metadata: Metadata = {
   title: 'Pradeep Kumar S',
-  description: 'Full Stack Developer specializing in MERN & Next.js - Passionate about Scalable AI-integrated Web Apps',
-  keywords: 'Full Stack Developer, MERN Stack, Next.js, React, Node.js, MongoDB, JavaScript, TypeScript',
+  description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
+  keywords: 'Full Stack Developer, MERN Stack, Next.js, React, Node.js, MongoDB, JavaScript, TypeScript, GenAI, Agentic AI, LangChain, RAG, Databricks',
   authors: [{ name: 'Pradeep Kumar S' }],
   icons: {
     icon: '/PK_lightlogo.png',
@@ -18,23 +18,23 @@ export const metadata: Metadata = {
     apple: '/PK_lightlogo.png',
   },
   openGraph: {
-    title: 'Pradeep Kumar S - Full Stack Developer',
-    description: 'Full Stack Developer specializing in MERN & Next.js - Passionate about Scalable AI-integrated Web Apps',
+    title: 'Pradeep Kumar S - Full Stack & GenAI Developer',
+    description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
     type: 'website',
     images: [
       {
-        url: '/image.png',
+        url: '/PK_lightlogo.png',
         width: 1200,
         height: 630,
-        alt: 'Pradeep Kumar S - Full Stack Developer',
+        alt: 'Pradeep Kumar S - Full Stack & GenAI Developer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pradeep Kumar S - Full Stack Developer',
-    description: 'Full Stack Developer specializing in MERN & Next.js - Passionate about Scalable AI-integrated Web Apps',
-    images: ['/image.png'],
+    title: 'Pradeep Kumar S - Full Stack & GenAI Developer',
+    description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
+    images: ['/PK_lightlogo.png'],
   },
 };
 

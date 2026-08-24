@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, Calendar, User, Linkedin } from 'lucide-react';
+import { HighlightText } from '@/components/highlight-text';
 
 const personalInfo = [
   { icon: User, label: 'Full Name', value: 'Pradeep Kumar S' },
@@ -89,7 +90,7 @@ export function AboutSection() {
                 I am a <span className="text-gray-900 dark:text-white font-serif italic">Full Stack Developer</span> with hands-on experience in the MERN stack and Next.js, deeply passionate about building scalable and aesthetic web applications.
               </p>
               <p>
-                I have integrated modern <span className="text-gray-900 dark:text-white font-medium">AI solutions</span> and worked on real-world projects in startup acceleration, ed-tech, and recruitment platforms. My focus lies in the intersection of beautiful user interfaces and robust backend systems.
+                <HighlightText text="I've since expanded into GenAI and Agentic AI development — building RAG pipelines and LLM-powered tools, and earning a Databricks Certified Data Engineer Associate credential — while shipping real-world projects in startup acceleration, ed-tech, and recruitment platforms." />
               </p>
               <p>
                 My commitment is to deliver high-quality software that transcends expectations. I thrive in collaborative environments and constantly seek challenges that push the boundaries of modern digital storytelling.

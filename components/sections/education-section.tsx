@@ -4,24 +4,24 @@ import { motion } from 'framer-motion';
 
 const education = [
   {
-    institution: 'SNS College of Technology',
-    degree: 'Bachelor\'s Degree',
-    year: '2024',
+    institution: 'SNS Institutions',
+    degree: 'Bachelor of Technology',
+    year: '2021 – 2024',
     location: 'Coimbatore',
     type: 'Higher Education',
   },
   {
-    institution: 'Sri Ramakrishna Polytechnic College',
+    institution: 'Sri Ramakrishna Degree College (Autonomous)',
     degree: 'Diploma',
-    year: '2019',
+    year: '2020',
     location: 'Coimbatore',
     type: 'Technical Education',
   },
   {
-    institution: 'REX Senior Secondary School',
+    institution: 'Christus Rex Higher Secondary School',
     degree: 'Secondary Education',
-    year: '2017',
-    location: '',
+    year: '2018',
+    location: 'Ooty',
     type: 'School Education',
   }
 ];

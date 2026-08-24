@@ -6,12 +6,12 @@ const skillCategories = [
   {
     id: 1,
     title: 'Frontend',
-    skills: ['React.js', 'Next.js', 'Tailwind CSS', 'Zustand', 'Framer Motion']
+    skills: ['React.js', 'Next.js', 'Redux Toolkit', 'Zustand', 'Tailwind CSS', 'Framer Motion', 'Three.js']
   },
   {
     id: 2,
     title: 'Backend',
-    skills: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL']
+    skills: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL', 'JWT Authentication', 'WebSockets']
   },
   {
     id: 3,
@@ -20,13 +20,14 @@ const skillCategories = [
   },
   {
     id: 4,
-    title: 'Tools & Platforms',
-    skills: ['Git', 'GitHub', 'Postman', 'Docker', 'AWS']
+    title: 'GenAI & Agentic AI',
+    featured: true,
+    skills: ['LangChain', 'OpenAI API', 'Gemini API', 'RAG', 'Apache Spark', 'Delta Lake']
   },
   {
     id: 5,
-    title: 'Other Technologies',
-    skills: ['Agentic AI', 'JWT Authentication', 'WebSockets', 'Three.js']
+    title: 'Tools & Platforms',
+    skills: ['Git', 'GitHub', 'Postman', 'Docker', 'AWS', 'Vercel']
   },
   {
     id: 6,
@@ -67,14 +68,22 @@ export function SkillsSection() {
               viewport={{ once: true }}
               className="flex flex-col group cursor-default"
             >
-              <h3 className="text-3xl md:text-4xl font-medium tracking-tight text-gray-900 dark:text-white mb-6 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors duration-500">
+              <h3 className={`text-3xl md:text-4xl tracking-tight mb-6 transition-colors duration-500 ${
+                category.featured
+                  ? 'font-serif italic text-gray-900 dark:text-white'
+                  : 'font-medium text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300'
+              }`}>
                 {category.title}
               </h3>
               <div className="flex flex-col space-y-3 border-l border-gray-200 dark:border-gray-800 pl-6 group-hover:border-gray-900 dark:group-hover:border-white transition-colors duration-500">
                 {category.skills.map((skill, skillIndex) => (
-                  <span 
+                  <span
                     key={skill}
-                    className="text-lg text-gray-500 dark:text-gray-400 font-light tracking-wide group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-500"
+                    className={`text-lg tracking-wide transition-colors duration-500 ${
+                      skill === 'RAG'
+                        ? 'text-gray-900 dark:text-white font-medium'
+                        : 'text-gray-500 dark:text-gray-400 font-light group-hover:text-gray-900 dark:group-hover:text-white'
+                    }`}
                     style={{ transitionDelay: `${skillIndex * 50}ms` }}
                   >
                     {skill}

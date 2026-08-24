@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowDown, Github, Linkedin, Mail, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { HighlightText } from '@/components/highlight-text';
 import * as THREE from 'three';
 
 // Dynamically import the entire 3D component
@@ -126,7 +127,7 @@ export function HeroSection() {
             className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end justify-between max-w-7xl gap-8"
           >
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-md font-sans font-light leading-relaxed">
-              Full Stack Developer crafting immersive, scalable, and AI-integrated web experiences.
+              <HighlightText text="Full-Stack (MERN) & GenAI Developer crafting immersive, scalable, AI-integrated web experiences." />
             </p>
 
             <div className="flex items-center gap-6 pointer-events-auto">

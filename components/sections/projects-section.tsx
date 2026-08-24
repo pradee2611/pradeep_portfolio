@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { HighlightText } from '@/components/highlight-text';
 
 const featuredProjects = [
   {
@@ -12,22 +13,25 @@ const featuredProjects = [
     role: 'Full-stack development, funding module, onboarding',
     technologies: ['Next.js', 'Node.js', 'Express', 'MongoDB'],
     url: 'https://www.startzyai.com/',
+    image: '/projects/startzy.png',
   },
   {
     title: 'EdCom',
     subtitle: 'Student Admission Portal',
-    description: 'A student admission management system with multi-step forms, real-time validation, and secure payment integration.',
-    role: 'Multi-step forms, real-time validation, secure payment gateway',
+    description: 'A student admission management system with multi-step forms, real-time validation, Razorpay payment integration, and automated seat and document workflows.',
+    role: 'Multi-step forms, real-time validation, Razorpay integration, automated enrollment workflows',
     technologies: ['React', 'Express', 'Node.js', 'MongoDB'],
     url: 'https://github.com/pradee2611/admissionPortalFrontend',
+    image: '/projects/edcom.png',
   },
   {
     title: 'HyrDragon',
-    subtitle: 'Intelligent Resume Analysis',
-    description: 'Platform for resume analysis and interview evaluation. Built modules for coding tests, AI chatbot interviews, and proctoring.',
-    role: 'Coding tests, AI chatbot interviews, MCQ assessments, proctoring',
+    subtitle: 'AI-First Hiring Platform',
+    description: 'An AI-first recruitment platform for automated skill matching, resume analysis, and interview evaluation. Built modules for coding tests, AI chatbot interviews, and proctoring.',
+    role: 'AI matchmaking, coding tests, AI chatbot interviews, MCQ assessments, proctoring & security',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Python'],
     url: 'https://hyrdragon.digitaldiffuse.in/',
+    image: '/projects/hyrdragon.webp',
   },
   {
     title: 'Milai.ai',
@@ -36,6 +40,15 @@ const featuredProjects = [
     role: 'Skill-gap analysis, interview bots, coding challenges',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
     url: 'https://milai.ai/',
+  },
+  {
+    title: 'Dragon Suite',
+    subtitle: 'AI Exam Prep & Placement Platform',
+    description: 'A 20-module super app spanning exam prep, placement readiness, and AI-driven candidate assessment for students, recruiters, and colleges.',
+    role: 'Full-stack development across the exam-prep, hiring, and AI modules',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
+    url: 'https://www.1000dragons.ai/',
+    image: '/projects/dragon-suite.webp',
   }
 ];
 
@@ -47,10 +60,11 @@ const openSourceProjects = [
     role: 'End-to-end full-stack development, real-time dashboard, and donor matching logistics',
     technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
     url: 'https://github.com/pradee2611/FoodAccess',
+    image: '/projects/foodaccess.png',
   },
   {
     title: 'Agentic AI Workshop',
-    subtitle: 'Autonomous Systems & LLMs',
+    subtitle: 'Agentic AI & LLM Systems',
     description: 'Hands-on training resources, implementation notebooks, and practical examples for building intelligent autonomous agents, multi-agent frameworks, and structured tool-calling pipelines.',
     role: 'Curated notebook materials, LangChain agents, and custom tool integrations',
     technologies: ['Jupyter Notebook', 'Python', 'LangChain', 'Gemini API'],
@@ -71,12 +85,32 @@ const openSourceProjects = [
     role: 'Custom React hooks, algorithmic animations, and responsive components',
     technologies: ['React', 'JavaScript', 'HTML5', 'CSS3', 'Vercel'],
     url: 'https://github.com/pradee2611/learning',
+  },
+  {
+    title: 'Student Placement Predictor',
+    subtitle: 'ML Placement & Salary Predictor',
+    description: 'A machine learning app that predicts campus placement outcomes and salary packages, with SHAP-powered explainability and actionable improvement suggestions.',
+    role: 'Model training, SHAP explainability, and Gradio interface',
+    technologies: ['Python', 'XGBoost', 'Scikit-learn', 'SHAP', 'Gradio'],
+    url: 'https://github.com/pradee2611/Student-Placement-Predictor',
+    image: '/projects/placement-predictor.png',
+  },
+  {
+    title: 'JEE/NEET MCQ Generator',
+    subtitle: 'RAG-Powered Question Generation',
+    description: 'An AI application that generates JEE/NEET practice MCQs using Retrieval-Augmented Generation (RAG), with OCR-based content ingestion and a searchable knowledge base.',
+    role: 'RAG pipeline, OCR ingestion, and vector search implementation',
+    technologies: ['Python', 'Streamlit', 'Gemini API', 'FAISS', 'Tesseract OCR'],
+    url: 'https://github.com/pradee2601/Question-Extraction',
   }
 ];
 
 export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<'featured' | 'opensource'>('featured');
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const currentProjects = activeTab === 'featured' ? featuredProjects : openSourceProjects;
+  const hoveredProject = hoveredIndex !== null ? currentProjects[hoveredIndex] : null;
 
   return (
     <section id="projects" className="py-32 bg-[#fcfbfe] dark:bg-[#08080a] relative overflow-hidden">
@@ -107,7 +141,7 @@ export function ProjectsSection() {
           className="flex gap-8 mb-16 border-b border-gray-200 dark:border-gray-800 pb-px"
         >
           <button
-            onClick={() => setActiveTab('featured')}
+            onClick={() => { setActiveTab('featured'); setHoveredIndex(null); }}
             className={`text-xl md:text-2xl font-serif italic pb-6 relative transition-colors duration-300 ${
               activeTab === 'featured'
                 ? 'text-gray-900 dark:text-white font-medium'
@@ -124,7 +158,7 @@ export function ProjectsSection() {
             )}
           </button>
           <button
-            onClick={() => setActiveTab('opensource')}
+            onClick={() => { setActiveTab('opensource'); setHoveredIndex(null); }}
             className={`text-xl md:text-2xl font-serif italic pb-6 relative transition-colors duration-300 ${
               activeTab === 'opensource'
                 ? 'text-gray-900 dark:text-white font-medium'
@@ -163,6 +197,9 @@ export function ProjectsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   viewport={{ once: true }}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
                   className="group block py-12 border-b border-gray-200 dark:border-gray-800 hover:border-gray-900 dark:hover:border-white transition-colors duration-500 cursor-pointer"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 items-center">
@@ -177,7 +214,7 @@ export function ProjectsSection() {
                     {/* Subtitle & Role */}
                     <div className="md:col-span-3 flex flex-col">
                       <p className="text-sm font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2">
-                        {project.subtitle}
+                        <HighlightText text={project.subtitle} />
                       </p>
                       <p className="text-base text-gray-600 dark:text-gray-400 font-serif italic">
                         {project.technologies.join(', ')}
@@ -187,7 +224,7 @@ export function ProjectsSection() {
                     {/* Description */}
                     <div className="md:col-span-4 flex flex-col">
                       <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
-                        {project.description}
+                        <HighlightText text={project.description} />
                       </p>
                     </div>
 
@@ -205,6 +242,26 @@ export function ProjectsSection() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Floating cursor preview */}
+      <AnimatePresence>
+        {hoveredProject?.image && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-none fixed z-50 hidden lg:block w-72 h-48 rounded-lg overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800"
+            style={{ left: cursor.x + 32, top: cursor.y - 96 }}
+          >
+            <img
+              src={hoveredProject.image}
+              alt={hoveredProject.title}
+              className="w-full h-full object-cover object-top"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

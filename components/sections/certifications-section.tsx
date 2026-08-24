@@ -5,14 +5,72 @@ import { ArrowUpRight } from 'lucide-react';
 
 const certifications = [
   {
+    title: 'Databricks Certified Data Engineer Associate',
+    highlight: 'Data Engineer Associate',
+    issuer: 'Databricks',
+    date: 'May 2026 · Expires May 2028',
+    category: 'AI & Data Engineering',
+  },
+  {
     title: 'Generative AI Engineer Associate',
+    highlight: 'Generative AI Engineer',
     issuer: 'Databricks',
     date: 'Jan 2026',
     category: 'AI & Data Engineering',
     url: 'https://credentials.databricks.com/ce209708-a8a3-46da-91e5-ceba90c809f3#acc.qNTGdh1D',
   },
   {
+    title: 'Model Context Protocol: Advanced Topics',
+    highlight: 'Model Context Protocol',
+    issuer: 'Anthropic',
+    date: 'Jul 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Certificate of Completion: Introduction to Subagents',
+    highlight: 'Subagents',
+    issuer: 'Anthropic',
+    date: 'Jul 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Introduction to Model Context Protocol',
+    highlight: 'Model Context Protocol',
+    issuer: 'Anthropic',
+    date: 'Jun 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Certificate of Completion: Introduction to Agent Skills',
+    highlight: 'Agent Skills',
+    issuer: 'Anthropic',
+    date: 'Jun 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Claude Code in Action',
+    highlight: 'Claude Code',
+    issuer: 'Anthropic',
+    date: 'Jun 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Building with the Claude API',
+    highlight: 'Claude API',
+    issuer: 'Anthropic',
+    date: 'Jun 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
+    title: 'Certificate of Completion: AI Fluency Framework & Foundations',
+    highlight: 'AI Fluency',
+    issuer: 'Anthropic',
+    date: 'Jun 2026',
+    category: 'AI & Agentic Development',
+  },
+  {
     title: 'Generative AI Applications & Python Fundamentals',
+    highlight: 'Generative AI',
     issuer: 'HCL GUVI',
     date: 'May 2025',
     category: 'Artificial Intelligence',
@@ -20,6 +78,7 @@ const certifications = [
   },
   {
     title: 'Full Stack Web Development (MERN Stack)',
+    highlight: 'MERN Stack',
     issuer: 'PrepInsta',
     date: 'Feb 2024',
     category: 'Web Development',
@@ -27,6 +86,7 @@ const certifications = [
   },
   {
     title: 'Enterprise Design Thinking Co-Creator',
+    highlight: 'Design Thinking',
     issuer: 'IBM',
     date: 'Mar 2022',
     category: 'Design & Product',
@@ -34,6 +94,7 @@ const certifications = [
   },
   {
     title: 'Enterprise Design Thinking Practitioner',
+    highlight: 'Design Thinking',
     issuer: 'IBM',
     date: 'Mar 2022',
     category: 'Design & Product',
@@ -41,33 +102,63 @@ const certifications = [
   },
   {
     title: 'NPTEL IoT Fundamentals',
+    highlight: 'IoT',
     issuer: 'NPTEL',
     date: '2023',
     category: 'IoT & Hardware',
   },
   {
     title: 'FACE Training Certificate of Appreciation',
+    highlight: 'FACE Training',
     issuer: 'FACE Training',
     date: '2023',
     category: 'Professional Development',
   },
   {
     title: 'MSP Trust & Lions Club Participation',
+    highlight: 'Lions Club',
     issuer: 'Lions Club',
     date: '2022',
     category: 'Community Service',
   },
   {
     title: 'Git & Quantitative Aptitude (PrepInsta)',
+    highlight: 'Git',
     category: 'Development & Analytics',
   },
   {
     title: 'Conference: Innovative Research (International)',
+    highlight: 'Innovative Research',
     issuer: 'International Research Conference',
     date: '2023',
     category: 'Research & Innovation',
   }
 ];
+
+function CertTitle({ title, highlight }: { title: string; highlight?: string }) {
+  const baseClass = 'font-light text-gray-500 dark:text-gray-400';
+  const highlightClass = 'font-medium text-gray-900 dark:text-white';
+
+  if (!highlight) {
+    return <span className={baseClass}>{title}</span>;
+  }
+
+  const matchIndex = title.indexOf(highlight);
+  if (matchIndex === -1) {
+    return <span className={baseClass}>{title}</span>;
+  }
+
+  const before = title.slice(0, matchIndex);
+  const after = title.slice(matchIndex + highlight.length);
+
+  return (
+    <>
+      {before && <span className={baseClass}>{before}</span>}
+      <span className={highlightClass}>{highlight}</span>
+      {after && <span className={baseClass}>{after}</span>}
+    </>
+  );
+}
 
 export function CertificationsSection() {
   return (
@@ -114,8 +205,8 @@ export function CertificationsSection() {
               >
                 {/* Left Side: Title, Issuer, and Date */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl md:text-3xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500">
-                    {cert.title}
+                  <h3 className="text-2xl md:text-3xl tracking-tight group-hover:pl-4 transition-all duration-500">
+                    <CertTitle title={cert.title} highlight={cert.highlight} />
                   </h3>
                   <div className="flex items-center gap-4 group-hover:pl-4 transition-all duration-500">
                     <p className="text-sm font-serif italic text-gray-600 dark:text-gray-400">
