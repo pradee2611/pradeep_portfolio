@@ -25,13 +25,21 @@ export function Footer() {
             >
               GitHub
             </a>
-            <a 
-              href="https://www.linkedin.com/in/pradeep-kumar-selvam" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.linkedin.com/in/pradeep-kumar-selvam"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs font-sans uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
             >
               LinkedIn
+            </a>
+            <a
+              href="https://huggingface.co/Pradee26112001"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-sans uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
+            >
+              Hugging Face
             </a>
           </div>
 

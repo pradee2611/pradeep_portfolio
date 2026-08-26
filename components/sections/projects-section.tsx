@@ -27,7 +27,7 @@ const featuredProjects = [
   {
     title: 'HyrDragon',
     subtitle: 'AI-First Hiring Platform',
-    description: 'An AI-first recruitment platform for automated skill matching, resume analysis, and interview evaluation. Built modules for coding tests, AI chatbot interviews, and proctoring.',
+    description: 'An AI-first recruitment platform for automated skill matching, resume analysis, and interview evaluation. Engineered the backend to reliably support 600 concurrent users, with modules for coding tests, AI chatbot interviews, and proctoring.',
     role: 'AI matchmaking, coding tests, AI chatbot interviews, MCQ assessments, proctoring & security',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Python'],
     url: 'https://hyrdragon.digitaldiffuse.in/',
@@ -107,10 +107,7 @@ const openSourceProjects = [
 
 export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<'featured' | 'opensource'>('featured');
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const currentProjects = activeTab === 'featured' ? featuredProjects : openSourceProjects;
-  const hoveredProject = hoveredIndex !== null ? currentProjects[hoveredIndex] : null;
 
   return (
     <section id="projects" className="py-32 bg-[#fcfbfe] dark:bg-[#08080a] relative overflow-hidden">
@@ -141,7 +138,7 @@ export function ProjectsSection() {
           className="flex gap-8 mb-16 border-b border-gray-200 dark:border-gray-800 pb-px"
         >
           <button
-            onClick={() => { setActiveTab('featured'); setHoveredIndex(null); }}
+            onClick={() => setActiveTab('featured')}
             className={`text-xl md:text-2xl font-serif italic pb-6 relative transition-colors duration-300 ${
               activeTab === 'featured'
                 ? 'text-gray-900 dark:text-white font-medium'
@@ -158,7 +155,7 @@ export function ProjectsSection() {
             )}
           </button>
           <button
-            onClick={() => { setActiveTab('opensource'); setHoveredIndex(null); }}
+            onClick={() => setActiveTab('opensource')}
             className={`text-xl md:text-2xl font-serif italic pb-6 relative transition-colors duration-300 ${
               activeTab === 'opensource'
                 ? 'text-gray-900 dark:text-white font-medium'
@@ -197,16 +194,33 @@ export function ProjectsSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   viewport={{ once: true }}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                  onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
-                  className="group block py-12 border-b border-gray-200 dark:border-gray-800 hover:border-gray-900 dark:hover:border-white transition-colors duration-500 cursor-pointer"
+                  className="group block py-10 border-b border-gray-200 dark:border-gray-800 hover:border-gray-900 dark:hover:border-white transition-colors duration-500 cursor-pointer"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-4 items-center">
-                    
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-6 items-center">
+
+                    {/* Thumbnail */}
+                    <div className="md:col-span-2 order-first">
+                      <div className="relative w-full aspect-[4/3] md:aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+                        {project.image ? (
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
+                            <span className="font-serif italic text-3xl text-gray-400 dark:text-gray-600">
+                              {project.title.charAt(0)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     {/* Title */}
-                    <div className="md:col-span-4 flex items-center gap-6">
-                      <h3 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500">
+                    <div className="md:col-span-3 flex items-center gap-6">
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500">
                         {project.title}
                       </h3>
                     </div>
@@ -222,10 +236,16 @@ export function ProjectsSection() {
                     </div>
 
                     {/* Description */}
-                    <div className="md:col-span-4 flex flex-col">
+                    <div className="md:col-span-3 flex flex-col gap-2">
                       <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                         <HighlightText text={project.description} />
                       </p>
+                      {project.role && (
+                        <p className="text-sm text-gray-500 dark:text-gray-500 font-light">
+                          <span className="font-medium text-gray-600 dark:text-gray-400">My role:</span>{' '}
+                          {project.role}
+                        </p>
+                      )}
                     </div>
 
                     {/* Arrow */}
@@ -242,26 +262,6 @@ export function ProjectsSection() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Floating cursor preview */}
-      <AnimatePresence>
-        {hoveredProject?.image && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none fixed z-50 hidden lg:block w-72 h-48 rounded-lg overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800"
-            style={{ left: cursor.x + 32, top: cursor.y - 96 }}
-          >
-            <img
-              src={hoveredProject.image}
-              alt={hoveredProject.title}
-              className="w-full h-full object-cover object-top"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

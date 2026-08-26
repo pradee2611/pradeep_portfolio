@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X, Download, FileText, FileType } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '@/components/theme-toggle';
 
@@ -18,6 +18,8 @@ const navItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
+  const resumeMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,13 +30,26 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleDownloadResume = () => {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (resumeMenuRef.current && !resumeMenuRef.current.contains(e.target as Node)) {
+        setResumeMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleDownloadResume = (format: 'pdf' | 'docx') => {
+    const href = format === 'pdf' ? '/Pradeep_Kumar_S_Resume.pdf' : '/Pradeep_Kumar_S_Resume.docx';
+    const filename = format === 'pdf' ? 'Pradeep_Kumar_S_Resume.pdf' : 'Pradeep_Kumar_S_Resume.docx';
     const link = document.createElement('a');
-    link.href = '/Pradeep_kumar_S.pdf';
-    link.download = 'Pradeep kumar S.pdf';
+    link.href = href;
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setResumeMenuOpen(false);
   };
 
   return (
@@ -98,13 +113,41 @@ export function Navigation() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <button
-              onClick={handleDownloadResume}
-              className="group flex items-center gap-2 text-xs font-sans uppercase tracking-[0.2em] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-full px-6 py-3 hover:border-gray-900 dark:hover:border-gray-100 transition-colors duration-300"
-            >
-              Resume
-              <Download className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform duration-300" />
-            </button>
+            <div className="relative" ref={resumeMenuRef}>
+              <button
+                onClick={() => setResumeMenuOpen((prev) => !prev)}
+                className="group flex items-center gap-2 text-xs font-sans uppercase tracking-[0.2em] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-full px-6 py-3 hover:border-gray-900 dark:hover:border-gray-100 transition-colors duration-300"
+              >
+                Resume
+                <Download className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform duration-300" />
+              </button>
+              <AnimatePresence>
+                {resumeMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute right-0 mt-2 w-56 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl overflow-hidden"
+                  >
+                    <button
+                      onClick={() => handleDownloadResume('pdf')}
+                      className="w-full flex items-center gap-3 px-5 py-3 text-xs font-sans uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                    >
+                      <FileText className="w-4 h-4" />
+                      Download PDF
+                    </button>
+                    <button
+                      onClick={() => handleDownloadResume('docx')}
+                      className="w-full flex items-center gap-3 px-5 py-3 text-xs font-sans uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 border-t border-gray-100 dark:border-gray-900"
+                    >
+                      <FileType className="w-4 h-4" />
+                      Download Word (.docx)
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <ThemeToggle />
           </motion.div>
 
@@ -156,13 +199,20 @@ export function Navigation() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navItems.length * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="pt-8"
+                className="pt-8 flex flex-col items-center gap-4"
               >
                 <button
-                  onClick={handleDownloadResume}
+                  onClick={() => handleDownloadResume('pdf')}
                   className="flex items-center gap-2 text-sm font-sans uppercase tracking-widest text-white dark:text-black bg-gray-900 dark:bg-white rounded-full px-8 py-4 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors duration-300"
                 >
-                  Download Resume
+                  Download PDF
+                  <Download className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleDownloadResume('docx')}
+                  className="flex items-center gap-2 text-sm font-sans uppercase tracking-widest text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-full px-8 py-4 hover:border-gray-900 dark:hover:border-gray-100 transition-colors duration-300"
+                >
+                  Download Word (.docx)
                   <Download className="w-4 h-4" />
                 </button>
               </motion.div>

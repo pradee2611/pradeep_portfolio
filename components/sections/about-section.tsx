@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { MapPin, Mail, Phone, Calendar, User, Linkedin } from 'lucide-react';
+import { MapPin, Mail, Phone, Calendar, User, Linkedin, Bot } from 'lucide-react';
 import { HighlightText } from '@/components/highlight-text';
 
 const personalInfo = [
@@ -71,6 +71,23 @@ export function AboutSection() {
                     className="text-base text-gray-900 dark:text-white font-medium hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
                   >
                     Connect with me
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4 pt-4">
+                <Bot className="w-4 h-4 text-gray-400 dark:text-gray-500" strokeWidth={1.5} />
+                <div>
+                  <p className="text-xs font-sans uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-0.5">
+                    Hugging Face
+                  </p>
+                  <a
+                    href="https://huggingface.co/Pradee26112001"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base text-gray-900 dark:text-white font-medium hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
+                  >
+                    View my models
                   </a>
                 </div>
               </div>
