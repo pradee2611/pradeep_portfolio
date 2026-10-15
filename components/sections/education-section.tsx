@@ -72,7 +72,7 @@ export function EducationSection() {
 
                 {/* Institution */}
                 <div className="md:col-span-5 flex flex-col">
-                  <h3 className="text-3xl md:text-4xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500 mb-2">
+                  <h3 className="text-3xl md:text-4xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:translate-x-4 transition-transform duration-500 mb-2">
                     {edu.institution}
                   </h3>
                 </div>

@@ -93,7 +93,6 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
   /* keep the layout width steady when the loading screen locks/unlocks scrolling */
   scrollbar-gutter: stable;
 }

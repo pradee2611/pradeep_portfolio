@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   MeshDistortMaterial,
   Sphere,
   Float,
   Environment,
-  Lightformer,
-  PerformanceMonitor
+  Lightformer
 } from "@react-three/drei";
 import { useTheme } from "next-themes";
 import * as THREE from "three";
@@ -41,6 +40,80 @@ function Rig() {
     camera.position.lerp(target.set(mouse.x * 2.5, mouse.y * 2.5, camera.position.z), 0.05);
     camera.lookAt(0, 0, 0);
   });
+
+  return null;
+}
+
+// We drive the render loop ourselves (frameloop="never") so the scene can stand
+// completely still while the page scrolls or the hero is off-screen. The clock we
+// feed in only advances while rendering, so the blob resumes exactly where it
+// stopped instead of jumping. It also watches frame times and reports a device
+// that can't hold a smooth frame rate so the scene can switch to its light variant.
+function Driver({
+  active,
+  watchPerformance,
+  onSlow
+}: {
+  active: MutableRefObject<boolean>;
+  watchPerformance: boolean;
+  onSlow: () => void;
+}) {
+  const advance = useThree((state) => state.advance);
+  const watch = useRef(watchPerformance);
+  const slow = useRef(onSlow);
+  watch.current = watchPerformance;
+  slow.current = onSlow;
+
+  useEffect(() => {
+    let raf = 0;
+    let last = performance.now();
+    let sceneTime = 0;
+    let rendered = 0;
+    let wasActive = false;
+    let windowFrames = 0;
+    let windowMs = 0;
+    let slowWindows = 0;
+
+    const loop = (now: number) => {
+      raf = requestAnimationFrame(loop);
+      const dt = now - last;
+      last = now;
+
+      // Always render the first few frames, even if the hero is off-screen (e.g. a
+      // reload while scrolled down), so shaders are compiled and the scene is
+      // ready by the time anyone scrolls back up.
+      if (!active.current && rendered >= 3) {
+        wasActive = false;
+        return;
+      }
+
+      sceneTime += Math.min(dt, 100) / 1000;
+      advance(sceneTime, true);
+      rendered++;
+
+      // The first frame after a pause spans the pause, so it is not a fair sample.
+      if (!wasActive) {
+        wasActive = true;
+        windowFrames = 0;
+        windowMs = 0;
+        return;
+      }
+      if (!watch.current) return;
+
+      windowFrames++;
+      windowMs += dt;
+      if (windowFrames === 60) {
+        // two consecutive ~1s windows slower than 40fps = this device can't keep up
+        slowWindows = windowMs / windowFrames > 25 ? slowWindows + 1 : 0;
+        windowFrames = 0;
+        windowMs = 0;
+        if (slowWindows >= 2) slow.current();
+      }
+    };
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [advance, active]);
 
   return null;
 }
@@ -97,7 +170,19 @@ function GlassBlob({ isDark, quality }: { isDark: boolean; quality: Quality }) {
   );
 }
 
-function Scene({ quality, onReady }: { quality: Quality; onReady: () => void }) {
+function Scene({
+  quality,
+  active,
+  watchPerformance,
+  onSlow,
+  onReady
+}: {
+  quality: Quality;
+  active: MutableRefObject<boolean>;
+  watchPerformance: boolean;
+  onSlow: () => void;
+  onReady: () => void;
+}) {
   const { resolvedTheme } = useTheme();
 
   // resolvedTheme is undefined until next-themes has mounted
@@ -107,6 +192,7 @@ function Scene({ quality, onReady }: { quality: Quality; onReady: () => void }) 
 
   return (
     <>
+      <Driver active={active} watchPerformance={watchPerformance} onSlow={onSlow} />
       <Rig />
       <ReadySignal onReady={onReady} />
       <ambientLight intensity={isDark ? 0.8 : 1.2} />
@@ -125,21 +211,51 @@ function Scene({ quality, onReady }: { quality: Quality; onReady: () => void }) 
 
 export default function ThreeScene({ onReady }: { onReady?: () => void }) {
   const [quality, setQuality] = useState<Quality>(() => detectQuality());
-  const [inView, setInView] = useState(true);
   const [shown, setShown] = useState(false);
   const [monitoring, setMonitoring] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Stop rendering while the hero is scrolled out of view: the biggest single
-  // saving for scroll smoothness and battery once the user moves down the page.
+  // The scene only renders while the hero is on screen AND the page is not
+  // actively scrolling. Scrolling is the moment smoothness matters most, and a
+  // frozen background for a fraction of a second is imperceptible.
+  const active = useRef(true);
   useEffect(() => {
     const el = wrapperRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
-      rootMargin: "100px"
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
+    let visible = true;
+    let scrolling = false;
+    let timer = 0;
+    const update = () => {
+      active.current = visible && !scrolling;
+    };
+
+    const onScroll = () => {
+      scrolling = true;
+      update();
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        scrolling = false;
+        update();
+      }, 140);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    let observer: IntersectionObserver | undefined;
+    if (el && typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          update();
+        },
+        { rootMargin: "100px" }
+      );
+      observer.observe(el);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(timer);
+      observer?.disconnect();
+    };
   }, []);
 
   // Start judging performance only once the scene is visible and has settled, so
@@ -162,7 +278,7 @@ export default function ThreeScene({ onReady }: { onReady?: () => void }) {
       style={{ opacity: shown ? 1 : 0, transition: "opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1)" }}
     >
       <Canvas
-        frameloop={inView ? "always" : "never"}
+        frameloop="never"
         camera={{ position: [0, 0, 7], fov: 45 }}
         dpr={quality === "high" ? [1, 1.5] : [1, 1.25]}
         resize={{ scroll: false, debounce: { scroll: 0, resize: 200 } }}
@@ -173,9 +289,13 @@ export default function ThreeScene({ onReady }: { onReady?: () => void }) {
           toneMapping: THREE.ACESFilmicToneMapping
         }}
       >
-        {/* If a "high" device can't hold ~50fps, drop to the light variant for good. */}
-        {quality === "high" && monitoring && <PerformanceMonitor onDecline={() => setQuality("low")} />}
-        <Scene quality={quality} onReady={handleReady} />
+        <Scene
+          quality={quality}
+          active={active}
+          watchPerformance={quality === "high" && monitoring}
+          onSlow={() => setQuality("low")}
+          onReady={handleReady}
+        />
       </Canvas>
     </div>
   );

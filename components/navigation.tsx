@@ -59,8 +59,8 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={ready ? { y: 0 } : undefined}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-white/95 dark:bg-black/95 md:bg-white/80 md:dark:bg-black/80 md:backdrop-blur-xl border-b border-gray-100 dark:border-gray-900 py-4'
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,padding] duration-500 ${scrolled
+          ? 'bg-white/95 dark:bg-black/95 border-b border-gray-100 dark:border-gray-900 py-4'
           : 'bg-transparent py-6'
         }`}
     >

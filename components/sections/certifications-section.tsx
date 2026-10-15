@@ -193,10 +193,10 @@ function CertRow({ cert, index }: { cert: Cert; index: number }) {
     >
       {/* Left Side: Title, Issuer, and Date */}
       <div className="flex flex-col gap-2">
-        <h3 className="text-2xl md:text-3xl tracking-tight group-hover:pl-4 transition-all duration-500">
+        <h3 className="text-2xl md:text-3xl tracking-tight group-hover:translate-x-4 transition-transform duration-500">
           <CertTitle title={cert.title} highlight={cert.highlight} />
         </h3>
-        <div className="flex items-center gap-4 group-hover:pl-4 transition-all duration-500">
+        <div className="flex items-center gap-4 group-hover:translate-x-4 transition-transform duration-500">
           <p className="text-sm font-serif italic text-gray-600 dark:text-gray-400">
             {cert.issuer}
           </p>

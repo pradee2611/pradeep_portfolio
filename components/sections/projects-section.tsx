@@ -221,7 +221,7 @@ export function ProjectsSection() {
 
                     {/* Title */}
                     <div className="md:col-span-3 flex items-center gap-6">
-                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:pl-4 transition-all duration-500">
+                      <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-gray-900 dark:text-white group-hover:translate-x-4 transition-transform duration-500">
                         {project.title}
                       </h3>
                     </div>
