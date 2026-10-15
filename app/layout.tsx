@@ -4,6 +4,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { MotionProvider } from '@/components/motion-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { LoadingScreen } from '@/components/loading-screen';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfair = Playfair_Display({ subsets: ['latin'], style: ['italic'], variable: '--font-serif' });
@@ -49,6 +50,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+        {/* Server-rendered so it paints on the first frame; hidden if JavaScript is off. */}
+        <LoadingScreen />
+        <noscript>
+          <style>{`[data-app-loader]{display:none!important}`}</style>
+        </noscript>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -13,7 +13,7 @@ const featuredProjects = [
     role: 'Full-stack development, funding module, onboarding',
     technologies: ['Next.js', 'Node.js', 'Express', 'MongoDB'],
     url: 'https://www.startzyai.com/',
-    image: '/projects/startzy.png',
+    image: '/projects/startzy.webp',
   },
   {
     title: 'EdCom',
@@ -22,7 +22,7 @@ const featuredProjects = [
     role: 'Multi-step forms, real-time validation, Razorpay integration, automated enrollment workflows',
     technologies: ['React', 'Express', 'Node.js', 'MongoDB'],
     url: 'https://github.com/pradee2611/admissionPortalFrontend',
-    image: '/projects/edcom.png',
+    image: '/projects/edcom.webp',
   },
   {
     title: 'HyrDragon',
@@ -60,7 +60,7 @@ const openSourceProjects = [
     role: 'End-to-end full-stack development, real-time dashboard, and donor matching logistics',
     technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
     url: 'https://github.com/pradee2611/FoodAccess',
-    image: '/projects/foodaccess.png',
+    image: '/projects/foodaccess.webp',
   },
   {
     title: 'Agentic AI Workshop',
@@ -93,7 +93,7 @@ const openSourceProjects = [
     role: 'Model training, SHAP explainability, and Gradio interface',
     technologies: ['Python', 'XGBoost', 'Scikit-learn', 'SHAP', 'Gradio'],
     url: 'https://github.com/pradee2611/Student-Placement-Predictor',
-    image: '/projects/placement-predictor.png',
+    image: '/projects/placement-predictor.webp',
   },
   {
     title: 'JEE/NEET MCQ Generator',
@@ -206,6 +206,7 @@ export function ProjectsSection() {
                             src={project.image}
                             alt={project.title}
                             loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-110"
                           />
                         ) : (

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Download, FileText, FileType } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { useSiteReady } from '@/lib/site-ready';
 
 const navItems = [
   { href: '#home', label: 'Home' },
@@ -20,13 +21,15 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [resumeMenuOpen, setResumeMenuOpen] = useState(false);
   const resumeMenuRef = useRef<HTMLDivElement>(null);
+  const ready = useSiteReady();
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -55,9 +58,9 @@ export function Navigation() {
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      animate={ready ? { y: 0 } : undefined}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? 'bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-900 py-4'
+          ? 'bg-white/95 dark:bg-black/95 md:bg-white/80 md:dark:bg-black/80 md:backdrop-blur-xl border-b border-gray-100 dark:border-gray-900 py-4'
           : 'bg-transparent py-6'
         }`}
     >
@@ -68,7 +71,7 @@ export function Navigation() {
           <motion.a
             href="#home"
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={ready ? { opacity: 1, x: 0 } : undefined}
             transition={{ delay: 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="text-2xl font-serif italic text-gray-900 dark:text-white tracking-tight"
             onClick={(e) => {
@@ -89,7 +92,7 @@ export function Navigation() {
                 key={item.href}
                 href={item.href}
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={ready ? { opacity: 1, y: 0 } : undefined}
                 transition={{ delay: 0.1 + index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="text-xs font-sans uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300 relative group"
                 onClick={(e) => {
@@ -110,7 +113,7 @@ export function Navigation() {
           <motion.div
             className="hidden md:flex items-center space-x-4"
             initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={ready ? { opacity: 1, x: 0 } : undefined}
             transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative" ref={resumeMenuRef}>
@@ -168,13 +171,13 @@ export function Navigation() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: '100vh' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-black border-b border-gray-100 dark:border-gray-900 overflow-hidden"
+            className="md:hidden absolute top-full left-0 right-0 h-screen-stable bg-white dark:bg-black border-b border-gray-100 dark:border-gray-900 overflow-hidden"
           >
-            <div className="px-4 py-8 flex flex-col items-center justify-center space-y-8 h-[calc(100vh-80px)]">
+            <div className="px-4 py-8 flex flex-col items-center justify-center space-y-8 h-menu-stable">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.href}
