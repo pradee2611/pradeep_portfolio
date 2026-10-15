@@ -127,7 +127,7 @@ export function HeroSection() {
             className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end justify-between max-w-7xl gap-8"
           >
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-md font-sans font-light leading-relaxed">
-              <HighlightText text="Full-Stack (MERN) & Agentic AI Developer building Gen AI products with RAG-powered, scalable web experiences." />
+              <HighlightText text="Full-Stack (MERN), Agentic AI and Gen AI Developer building RAG-powered, scalable web experiences." />
             </p>
 
             <div className="flex items-center gap-6 pointer-events-auto">

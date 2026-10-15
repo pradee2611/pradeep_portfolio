@@ -27,7 +27,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: Introduction to Subagents',
+    title: 'Introduction to Subagents',
     highlight: 'Subagents',
     issuer: 'Anthropic',
     date: 'Jul 2026',
@@ -41,7 +41,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: Introduction to Agent Skills',
+    title: 'Introduction to Agent Skills',
     highlight: 'Agent Skills',
     issuer: 'Anthropic',
     date: 'Jun 2026',
@@ -62,7 +62,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: AI Fluency Framework & Foundations',
+    title: 'AI Fluency: Framework & Foundations',
     highlight: 'AI Fluency',
     issuer: 'Anthropic',
     date: 'Jun 2026',
