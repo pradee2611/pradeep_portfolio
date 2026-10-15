@@ -5,8 +5,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 const certifications = [
   {
-    title: 'Databricks Certified Data Engineer Associate',
-    highlight: 'Data Engineer Associate',
+    title: 'Data Engineer Associate',
+    highlight: 'Data Engineer',
     issuer: 'Databricks',
     date: 'May 2026 · Expires May 2028',
     category: 'AI & Data Engineering',
@@ -27,7 +27,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: Introduction to Subagents',
+    title: 'Introduction to Subagents',
     highlight: 'Subagents',
     issuer: 'Anthropic',
     date: 'Jul 2026',
@@ -41,7 +41,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: Introduction to Agent Skills',
+    title: 'Introduction to Agent Skills',
     highlight: 'Agent Skills',
     issuer: 'Anthropic',
     date: 'Jun 2026',
@@ -62,7 +62,7 @@ const certifications = [
     category: 'AI & Agentic Development',
   },
   {
-    title: 'Certificate of Completion: AI Fluency Framework & Foundations',
+    title: 'AI Fluency: Framework & Foundations',
     highlight: 'AI Fluency',
     issuer: 'Anthropic',
     date: 'Jun 2026',

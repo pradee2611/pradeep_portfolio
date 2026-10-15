@@ -22,7 +22,7 @@ const skillCategories = [
     id: 4,
     title: 'GenAI & Agentic AI',
     featured: true,
-    skills: ['LangChain', 'OpenAI API', 'Gemini API', 'RAG', 'Apache Spark', 'Delta Lake']
+    skills: ['LangChain', 'OpenAI API', 'Gemini API', 'RAG']
   },
   {
     id: 5,

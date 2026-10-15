@@ -11,7 +11,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], style: ['italic'], varia
 export const metadata: Metadata = {
   metadataBase: new URL('https://pradeepportfolio-lovat.vercel.app'),
   title: 'Pradeep Kumar S',
-  description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
+  description: 'Full-Stack (MERN), Agentic AI and Gen AI Developer building scalable, AI-integrated web applications. Databricks Data Engineer Associate and Generative AI Engineer Associate.',
   keywords: 'Full Stack Developer, MERN Stack, Next.js, React, Node.js, MongoDB, JavaScript, TypeScript, GenAI, Agentic AI, LangChain, RAG, Databricks',
   authors: [{ name: 'Pradeep Kumar S' }],
   icons: {
@@ -21,22 +21,22 @@ export const metadata: Metadata = {
   },
   openGraph: {
     url: 'https://pradeepportfolio-lovat.vercel.app',
-    title: 'Pradeep Kumar S - Full Stack & GenAI Developer',
-    description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
+    title: 'Pradeep Kumar S - Full-Stack (MERN), Agentic AI and Gen AI Developer',
+    description: 'Full-Stack (MERN), Agentic AI and Gen AI Developer building scalable, AI-integrated web applications. Databricks Data Engineer Associate and Generative AI Engineer Associate.',
     type: 'website',
     images: [
       {
         url: '/PK_lightlogo.png',
         width: 1200,
         height: 630,
-        alt: 'Pradeep Kumar S - Full Stack & GenAI Developer',
+        alt: 'Pradeep Kumar S - Full-Stack (MERN), Agentic AI and Gen AI Developer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pradeep Kumar S - Full Stack & GenAI Developer',
-    description: 'Full-Stack (MERN) & GenAI/Agentic AI Developer building scalable, AI-integrated web applications. Databricks Certified Data & GenAI Engineer.',
+    title: 'Pradeep Kumar S - Full-Stack (MERN), Agentic AI and Gen AI Developer',
+    description: 'Full-Stack (MERN), Agentic AI and Gen AI Developer building scalable, AI-integrated web applications. Databricks Data Engineer Associate and Generative AI Engineer Associate.',
     images: ['/PK_lightlogo.png'],
   },
 };

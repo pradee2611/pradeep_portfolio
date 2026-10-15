@@ -107,7 +107,7 @@ export function AboutSection() {
                 I am a <span className="text-gray-900 dark:text-white font-serif italic">Full Stack Developer</span> with hands-on experience in the MERN stack and Next.js, deeply passionate about building scalable and aesthetic web applications.
               </p>
               <p>
-                <HighlightText text="I've since expanded into GenAI and Agentic AI development — building RAG pipelines and LLM-powered tools, and earning a Databricks Certified Data Engineer Associate credential — while shipping real-world projects in startup acceleration, ed-tech, and recruitment platforms." />
+                <HighlightText text="I've since expanded into GenAI and Agentic AI development — building RAG pipelines and LLM-powered tools, and earning the Databricks Data Engineer Associate and Generative AI Engineer Associate credentials — while shipping real-world projects in startup acceleration, ed-tech, and recruitment platforms." />
               </p>
               <p>
                 My commitment is to deliver high-quality software that transcends expectations. I thrive in collaborative environments and constantly seek challenges that push the boundaries of modern digital storytelling.
