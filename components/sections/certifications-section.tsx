@@ -5,8 +5,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 const certifications = [
   {
-    title: 'Databricks Certified Data Engineer Associate',
-    highlight: 'Data Engineer Associate',
+    title: 'Data Engineer Associate',
+    highlight: 'Data Engineer',
     issuer: 'Databricks',
     date: 'May 2026 · Expires May 2028',
     category: 'AI & Data Engineering',
